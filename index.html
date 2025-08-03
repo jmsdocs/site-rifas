@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Minhas Rifas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Rifas Ativas</h1>
+  <div id="rifas-container" class="rifas-grid"></div>
+
+  <script src="api.js"></script>
+  <script>
+    async function carregarRifas() {
+      const rifas = await getRifas();
+      const container = document.getElementById("rifas-container");
+
+      rifas.forEach(rifa => {
+        const card = document.createElement("div");
+        card.innerHTML = `
+          <h2>${rifa.nome}</h2>
+          <p>Valor por número: R$ ${rifa.valor}</p>
+          <p>Prêmios:</p>
+          <ul>${rifa.premios.map(p => `<li>${p}</li>`).join("")}</ul>
+          <a href="rifa.html?id=${rifa.id}">Participar</a>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    carregarRifas();
+  </script>
+</body>
+</html>
